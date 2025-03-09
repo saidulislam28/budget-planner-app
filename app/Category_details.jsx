@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { useLocalSearchParams, useRouter } from 'expo-router'
+import { Link, useLocalSearchParams, useRouter } from 'expo-router'
 import { supabase } from '../utils/SupabaseConfig';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import CourseInfo from '../components/CourseDetail/CourseInfo';
@@ -9,7 +9,7 @@ import Colors from '../utils/Colors';
 export default function Category_details() {
     const { categoryId } = useLocalSearchParams();
     const [categoryData, setCategoryData] = useState([]);
-    const router= useRouter();
+    const router = useRouter();
 
 
     useEffect(() => {
@@ -30,18 +30,23 @@ export default function Category_details() {
 
     return (
         <View style={{ padding: 15, marginTop: 20, flex: 1 }}>
-            <TouchableOpacity onPress={()=> router.back()}> 
+            <TouchableOpacity onPress={() => router.back()}>
                 <Ionicons name="arrow-back-circle" size={44} color="black" />
             </TouchableOpacity>
             <CourseInfo categoryData={categoryData} />
             <CourseItemsList categoryData={categoryData} />
 
+            <Link
+                href={{
 
-            <TouchableOpacity style={styles.floatingBtn}>
-            <Ionicons name="add-circle" size={44} color={Colors.PRIMARY} />
-            </TouchableOpacity>
-
-
+                    pathname: '/AddNewCategoryItem',
+                    params: {
+                        categoryId: categoryData.id
+                    }
+                }}
+                style={styles.floatingBtn}>
+                <Ionicons name="add-circle" size={44} color={Colors.PRIMARY} />
+            </Link>
         </View>
     )
 }
