@@ -5,11 +5,13 @@ import ColorPicker from '../components/ColorPicker';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Feather from '@expo/vector-icons/Feather';
 import {supabase} from '../utils/SupabaseConfig'
+import { useRouter } from 'expo-router';
 export default function add_new_category() {
   const [selectedIcon, setSelectedIcon] = useState('IC');
   const [selectedColor, setSelectedColor] = useState(Colors.PRIMARY);
   const [categoryName, setCategoryName] = useState()
-  const [totalBudget, setTotalBudget] = useState()
+  const [totalBudget, setTotalBudget] = useState();
+  const router = useRouter();
 
 
   const onCreateCategory = async () => {
@@ -27,13 +29,17 @@ export default function add_new_category() {
         ])
         .select();
   
-      if (error) {
-        console.error('Supabase Insert Error:', error.message);
-       
-        return;
+      if (data) {
+        router.replace({
+          pathname: '/Category_details',
+          params: {
+            categoryId: data[0].id
+          }
+        })
+        console.log('Inserted Data:', data);
+        
       }
   
-      console.log('Inserted Data:', data);
       
     } catch (err) {
       console.error('Unexpected Error:', err);

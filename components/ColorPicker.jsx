@@ -10,7 +10,7 @@ export default function ColorPicker({selectedColor,setSelectedColor}) {
         alignItems: 'center'
     }}>
      {Colors.COLOR_LIST.map((color,index)=>(
-        <TouchableOpacity style={[{
+        <TouchableOpacity key={index} style={[{
             height: 30,
             width: 30,
             backgroundColor: color,
