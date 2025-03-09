@@ -38,15 +38,15 @@ export default function add_new_category() {
             categoryId: data[0].id
           }
         })
-        setLoading(false)
       }
   
       
     } catch (err) {
       console.error('Unexpected Error:', err);
+    }finally{
       setLoading(false)
-     
     }
+
   };
   
 
